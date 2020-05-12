@@ -17,6 +17,23 @@ export const initialState = {
     ]
   }
 
+  //Comparison Function to sort the feature arrays by the item id
+  const sortById = (a, b) => {
+    const itemA = a.id
+    const itemB = b.id
+
+    let comparison = 0
+
+    if (itemA > itemB) {
+        comparison = 1
+    }
+    else if (itemA < itemB) {
+        comparison = -1
+    }
+
+    return comparison
+}
+
   export const carReducer = (state = initialState, action) => {
       switch(action.type){
         case ADD_FEATURE:
@@ -30,10 +47,10 @@ export const initialState = {
                     //Clone the existing car obj
                     ...state.car,
                     //Clone the exisiting features and add the new one to the list
-                    features: [...state.car.features, action.payload]
+                    features: [...state.car.features, action.payload].sort(sortById)
                 },
                 //Clone the existing additonal features list and remove the one we added to the features
-                additionalFeatures: [...state.additionalFeatures.filter(item => item.id !== action.payload.id)]
+                additionalFeatures: [...state.additionalFeatures.filter(item => item.id !== action.payload.id).sort(sortById)]
             }
 
         case REMOVE_FEATURE:
@@ -47,10 +64,10 @@ export const initialState = {
                     //Clone the existing car obj
                     ...state.car,
                     //Clone the exisiting features and remove the one we clicked
-                    features: [...state.car.features.filter(item => item.id !== action.payload.id)]
+                    features: [...state.car.features.filter(item => item.id !== action.payload.id).sort(sortById)]
                 },
                 //Clone the existing additonal features list and add the one we removed from features
-                additionalFeatures: [...state.additionalFeatures, action.payload]
+                additionalFeatures: [...state.additionalFeatures, action.payload].sort(sortById)
             }
 
         default:
