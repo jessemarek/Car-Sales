@@ -33,7 +33,7 @@ export const initialState = {
                     features: [...state.car.features, action.payload]
                 },
                 //Clone the existing additonal features list and remove the one we added to the features
-                additionalFeatures: [...state.additionalFeatures.filter(item => item.id === !action.payload.id)]
+                additionalFeatures: [...state.additionalFeatures.filter(item => item.id !== action.payload.id)]
             }
 
         case REMOVE_FEATURE:
@@ -47,7 +47,7 @@ export const initialState = {
                     //Clone the existing car obj
                     ...state.car,
                     //Clone the exisiting features and remove the one we clicked
-                    features: [...state.car.features.filter(item => item.id === !action.payload.id)]
+                    features: [...state.car.features.filter(item => item.id !== action.payload.id)]
                 },
                 //Clone the existing additonal features list and add the one we removed from features
                 additionalFeatures: [...state.additionalFeatures, action.payload]
