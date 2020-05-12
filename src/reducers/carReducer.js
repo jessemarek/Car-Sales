@@ -19,10 +19,43 @@ export const initialState = {
 
   export const carReducer = (state = initialState, action) => {
       switch(action.type){
+        case ADD_FEATURE:
+            return {
+                //Clone the original state
+                ...state,
+                //Update the additonal price
+                additionalPrice: state.additionalPrice + action.payload.price,
+                //Update the car prop
+                car: {
+                    //Clone the existing car obj
+                    ...state.car,
+                    //Clone the exisiting features and add the new one to the list
+                    features: [...state.car.features, action.payload]
+                },
+                //Clone the existing additonal features list and remove the one we added to the features
+                additionalFeatures: [...state.additionalFeatures.filter(item => item.id === !action.payload.id)]
+            }
 
+        case REMOVE_FEATURE:
 
-          default:
-              return state
+            return {
+                //Clone the original state
+                ...state,
+                //Update the additonal price
+                additionalPrice: state.additionalPrice - action.payload.price,
+                //Update the car prop
+                car: {
+                    //Clone the existing car obj
+                    ...state.car,
+                    //Clone the exisiting features and remove the one we clicked
+                    features: [...state.car.features.filter(item => item.id === !action.payload.id)]
+                },
+                //Clone the existing additonal features list and add the one we removed from features
+                additionalFeatures: [...state.additionalFeatures, action.payload]
+            }
+
+        default:
+            return state
       }
       
   }
