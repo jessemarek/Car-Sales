@@ -37,7 +37,6 @@ export const initialState = {
             }
 
         case REMOVE_FEATURE:
-
             return {
                 //Clone the original state
                 ...state,
